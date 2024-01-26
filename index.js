@@ -11,20 +11,51 @@ var cors = require('cors');
 app.use(cors({optionsSuccessStatus: 200}));  // some legacy browsers choke on 204
 
 // http://expressjs.com/en/starter/static-files.html
-app.use(express.static('public'));
+//app.use(express.static('public'));
+app.use('/public', express.static(__dirname + '/public'));
 
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/", function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
-
 // your first API endpoint... 
 app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+// date endpoint
+app.get("/api/:date?", (req, res) => {
+  let date = req.params.date;
+  let unix = null;
+  let utc = null;
 
+  try {
+    if (date) {
+      // code for non-empty date paremeter
+      if (date.match(/\d{5,}/)) {
+        unix = parseInt(date);
+      } else {
+        unix = new Date(date).getTime();
+      }
+      if (!Number.isFinite(unix)) {
+        throw new Error("Invalid Date");
+      }
+      utc = new Date(unix).toUTCString();
+    } else {
+      // code for empty date parameter
+      unix = Date.now();
+      utc = new Date(unix).toUTCString();
+    }
+  } catch (error) {
+    // Handling invalid date parameters
+    console.error(`Error parsing date: ${error}`);
+    res.json({ error: "Invalid Date" });
+    return;
+  }
+
+  res.json({ unix, utc });
+});
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {

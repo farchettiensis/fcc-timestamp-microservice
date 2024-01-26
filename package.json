@@ -12,17 +12,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/freeCodeCamp/boilerplate-project-timestamp.git"
+    "url": "https://github.com/farchettiensis/fcc-timestamp-microservice.git"
   },
   "bugs": {
     "url": "https://github.com/freeCodeCamp/freeCodeCamp/issues"
   },
   "homepage": "https://github.com/freeCodeCamp/boilerplate-project-timestamp#readme",
-  "author": "freeCodeCamp <team@freecodecamp.org>",
+  "author": "Fernando Belmonte Archetti",
   "keywords": [
     "node",
     "express",
     "freeCodeCamp"
-  ],
-  "license": "MIT"
+  ]
 }
